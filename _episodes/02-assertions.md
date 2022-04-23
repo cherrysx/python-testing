@@ -1,25 +1,23 @@
 ---
-title: Assertions
+title: 断言
 teaching: 10
 exercises: 0
 questions:
-- "How can we compare observed and expected values?"
+- "我们如何比较观察值和预期值？"
 objectives:
-- "Assertions are one line tests embedded in code."
-- "Assertions can halt execution if something unexpected happens."
-- "Assertions are the building blocks of tests."
+- "断言是嵌入在代码中的单行测试。"
+- "如果发生意外情况，断言可以停止执行。"
+- "断言是测试的基石。"
 keypoints:
-- "Assertions are one line tests embedded in code."
-- "The `assert` keyword is used to set an assertion."
-- "Assertions halt execution if the argument is false."
-- "Assertions do nothing if the argument is true."
-- "The `numpy.testing` module provides tools numeric testing."
-- "Assertions are the building blocks of tests."
+- "断言是嵌入在代码中的单行测试。"
+- "`assert`关键字用于设置断言。"
+- "如果参数为假，断言将停止执行。"
+- "如果论证为真，则断言什么也不做。"
+- "`numpy.testing`模块提供工具数字测试。"
+- "断言是测试的基石。"
 ---
 
-Assertions are the simplest type of test. They are used as a tool for bounding
-acceptable behavior during runtime. The assert keyword in python has the
-following behavior:
+断言是最简单的测试类型。它们被用作在运行时限制可接受行为的工具。python中的asser 关键字具有以下行为：
 
 ~~~
 >>> assert True == False
@@ -39,9 +37,7 @@ Traceback (most recent call last):
 ~~~
 {: .output}
 
-That is, assertions halt code execution instantly if the comparison is false.
-It does nothing at all if the comparison is true. These are therefore a very
-good tool for guarding the function against foolish (e.g. human) input:
+也就是说，如果比较结果为假，断言会立即停止代码执行。如果比较是真的，它什么都不做。因此，这些是保护函数免受愚蠢（例如人类）输入的非常好的工具：
 
 ~~~
 def mean(num_list):
@@ -50,17 +46,12 @@ def mean(num_list):
 ~~~
 {: .python}
 
-The advantage of assertions is their ease of use. They are rarely more than one
-line of code. The disadvantage is that assertions halt execution
-indiscriminately and the helpfulness of the resulting error message is usually
-quite limited.
+断言的优点是易于使用。它们很少超过一行代码。缺点是断言会不加选择地停止执行，并且生成的错误消息的帮助通常非常有限。
 
-Also, input checking may require decending a rabbit hole of exceptional cases.
-What happens when the input provided to the mean function is a string, rather
-than a list of numbers?
+此外，减少异常情况发生，需要对输入进行检查。当提供给mean函数的输入是字符串而不是数字列表时会发生什么？
 
-1. Open a [Jupyter Notebook](https://jupyter.org/)
-2. Create the following function:
+1.打开一个[Jupyter Notebook](https://jupyter.org/)
+2. 创建以下函数：
 
 ~~~
 def mean(num_list):
@@ -68,22 +59,20 @@ def mean(num_list):
 ~~~
 {: .python}
 
-3. In the function, insert an assertion that checks whether the input is actually a list.
+3. 在函数中，插入一个断言来检查输入是否实际上是一个列表。
 
-> ## Hint
+> ## 提示
 >
-> Hint: Use the [isinstance function](https://docs.python.org/2/library/functions.html#isinstance).
+> 提示：使用[isinstance 函数](https://docs.python.org/2/library/functions.html#isinstance)。
 {: .callout}
 
-> ## Testing Near Equality
+> ## 测试近似相等
 >
-> Assertions are also helpful for catching abnormal behaviors, such as those
-> that arise with floating point arithmetic. Using the assert keyword, how could
-> you test whether some value is almost the same as another value?
+> 断言也有助于捕捉异常行为，例如浮点运算引起的异常行为。使用assert关键字，您如何测试某个值是否与另一个值几乎相同？
 >
-> - My package, mynum, provides the number a.
-> - Use the `assert` keyword to check whether the number a is greater than 2.
-> - Use the `assert` keyword to check that a is equal to 2 within an error of 0.003.
+> - 我的包mynum提供数字 a。
+> - 使用`assert`关键字检查数字a是否大于2。
+> - 使用`assert`关键字检查a是否等于2，误差为0.003。
 {: .callout}
 
 ~~~
@@ -95,8 +84,7 @@ from mynum import a
 
 ## NumPy
 
-The NumPy numerical computing library has a built-in function `assert_allclose`
-for comparing numbers within a tolerance:
+NumPy数值计算库有一个内置函数`assert_allclose`用于比较容差内的数字：
 
 ~~~
 from numpy.testing import assert_allclose

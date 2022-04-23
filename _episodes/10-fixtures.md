@@ -1,22 +1,16 @@
 ---
-title: Fixtures
+title: 测试固件（test fixtures）
 teaching: 10
 exercises: 0
 questions:
-- "How do I create and cleanup the data I need to test the code?"
+- "如何创建和清理测试代码所需的数据？"
 objectives:
-- Understand how test fixtures can help write tests.
+- 了解测试固件如何帮助编写测试。
 keypoints:
--   It may be necessary to set up "fixtures" composing the test environment.
+-   可能需要设置组成测试环境的“固件”。
 ---
-The above example didn't require much setup or teardown. Consider, however, the
-following example that could arise when comunicating with third-party programs.
-You have a function `f()` which will write a file named `yes.txt` to disk with
-the value 42 but only if a file `no.txt` does not exist. To truly test that the
-function works, you would want to ensure that neither `yes.txt` nor `no.txt`
-existed before you ran your test. After the test, you want to clean up after
-yourself before the next test comes along.  You could write the test, setup,
-and teardown functions as follows:
+
+上面的示例不需要太多setup或teardown。但是，请考虑以下与第三方程序通信时可能出现的示例。你有一个函数`f()`，它会将一个名为`yes.txt`的文件写入磁盘，值为42，但前提是文件`no.txt`不存在。要真正测试该功能是否有效，您需要确保在运行测试之前既不存在“yes.txt”也不存在“no.txt”。测试结束后，你想在下一次测试到来之前自己清理一下。您可以编写测试、setup和teardown函数，如下所示：
 
 ~~~
 import os
@@ -51,25 +45,11 @@ def test_f():
 ~~~
 {: .python}
 
-The above implementation of setup and teardown is usually fine.
-However, it does not guarantee that the `f_setup()` and the `f_teardown()` 
-functions will be called. This is because an unexpected error anywhere in 
-the body of `f()` or `test_f()` will cause the test to abort before the 
-teardown function is reached.
+上述setup和teardown的实现通常很好。但是，它不保证会调用 `f_setup()` 和 `f_teardown()` 函数。这是因为在 `f()` 或 `test_f()` 的任何地方出现意外错误会导致测试在达到拆卸功能之前中止。
 
-These setup and teardown behaviors are needed when _test fixtures_
-must be created.  A fixture is any environmental state or object that
-is required for the test to successfully run.
+当必须创建 _test fixtures_ 时，需要这些setup和teardown行为。fixture是测试成功运行所需的任何环境状态或对象。
 
-As above, a function that is executed before the test to prepare the fixture
-is called a _setup_ function. One that is executed to mop-up side effects
-after a test is run is called a _teardown_ function.
-By giving our setup and teardown functions special names pytest will
-ensure that they are run before and after our test function regardless of
-what happens in the test function.
-Those special names are `setup_function` and `teardown_function`,
-and each needs to take a single argument: the test function being run
-(in this case we will not use the argument).
+如上所述，在测试之前执行以准备fixture的函数称为 _setup_ 函数。在运行测试后执行以消除副作用的一种称为_teardown_函数。通过为我们的 setup 和 teardown 函数提供特殊名称，pytest将确保它们在我们的测试函数之前和之后运行，而不管测试函数中发生了什么。这些特殊名称是 `setup_function` 和 `teardown_function`，每个都需要一个参数：正在运行的测试函数（在这种情况下，我们不会使用参数）。
 
 ~~~
 import os
@@ -100,9 +80,4 @@ def test_f():
 ~~~
 {: .python}
 
-The setup and teardown functions make our test simpler and the teardown
-function is guaranteed to be run even if an exception happens in our test.
-In addition, the setup and teardown functions will be automatically called for
-_every_ test in a given file so that each begins and ends with clean state.
-(Pytest has its own neat [fixture system](http://pytest.org/latest/fixture.html#fixture)
-that we won't cover here.)
+setup 和 teardown 函数使我们的测试更简单，并且即使在我们的测试中发生异常，也可以保证运行 teardown 函数。 此外，设置和拆卸函数将自动为给定文件中的_every_测试调用，以便每个测试以干净状态开始和结束。（Pytest有自己简洁的 [fixture 系统](http://pytest.org/latest/fixture.html#fixture)，我们不会在这里介绍。）

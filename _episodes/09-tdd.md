@@ -1,61 +1,39 @@
 ---
-title: Test Driven Development
+title: 测试驱动开发
 teaching: 10
 exercises: 0
 questions:
-- "How do you make testing part of the code writing process?"
+- "您如何使测试成为代码编写过程的一部分？"
 objectives:
-- "Learn about the benefits and drawbacks of Test Driven Development."
-- "Write a test before writing the code."
+- "了解测试驱动开发的优点和缺点。"
+- "在写代码之前写一个测试。"
 keypoints:
-- "Test driven development is a common software development technique"
-- "By writing the tests first, the function requirements are very explicit"
-- "TDD is not for everyone"
-- "TDD requires vigilance for success"
+- "测试驱动开发是一种常见的软件开发技术"
+- "通过先写测试，功能需求非常明确"
+- "TDD 并不适合所有人"
 ---
 
-Test-driven Development (TDD) takes the workflow of writing code and writing
-tests and turns it on its head. TDD is a software development process where you
-write the tests first. Before you write a single line of a function, you
-first write the test for that function.
+测试驱动开发 (TDD) 完全颠覆了编写代码然后测试的工作流程。TDD是一个软件开发过程，您首先编写测试。在编写单行函数之前，首先要为该函数编写测试。
 
-After you write a test, you are then allowed to proceed to write the function
-that you are testing.  However, you are only supposed to implement enough of
-the function so that the test passes. If the function does not do what is
-needed, you write another test and then go back and modify the function.  You
-repeat this process of test-then-implement until the function is completely
-implemented for your current needs.
+编写测试后，您可以继续编写您正在测试的函数。但是，您只应该实现足够的功能以便测试通过。如果该函数没有执行所需的操作，则编写另一个测试，然后返回并修改该函数。您重复这个测试然后实施的过程，直到该功能完全满足您当前的需求。
 
-> ## The Big Idea
+> ## 创意
 >
-> This design philosophy was most strongly put forth by Kent Beck in his book
-> _Test-Driven  Development: By Example_.
+> Kent Beck在他的《测试驱动开发：通过示例》一书中最强烈地提出了这种设计理念。
 >
-> The central claim to TDD is that at the end of the process you have an
-> implementation that is well tested for your use case, and the process itself is
-> more efficient. You stop when your tests pass and you do not need any more
-> features. You do not spend any time implementing options and features on the off
-> chance that they will prove helpful later. You get what you need when you need it,
-> and no more. TDD is a very powerful idea, though it can be hard to follow religiously.
+> TDD的核心主张是，在流程结束时，您有一个针对您的用例进行了良好测试的实现，并且流程本身更加高效。当您的测试通过并且您不再需要任何功能时，您就停止了。您不会花任何时间来实现功能，因为它们稍后会被证明是有用的。当你需要它时，你会得到你需要的东西。TDD 是一个非常强大的想法，尽管很难虔诚地遵循它。
 {: .callout}
 
-The most important takeaway from test-driven development is that the moment
-you start writing code, you should be considering how to test that code. The
-tests should be written and presented in tandem with the implementation. **Testing
-is too important to be an afterthought.**
+测试驱动开发最重要的一点是，在您开始编写代码的那一刻，您应该考虑如何测试该代码。测试应该与实现一起编写和呈现。**测试太重要了，不能事后才想到。**
 
-> ## You Do You
+> ## 自己决定是否使用TDD
 >
-> Developers who practice strict TDD will tell you that it is the best thing since
-> sliced arrays. However, do what works for you. The choice whether to pursue
-> classic TDD is a personal decision.
+> 实践严格TDD的开发人员会告诉你，这是自切片数组以来最好的东西。但是，做对你有用的事。是否追求经典 TDD 的选择是个人决定。
 {: .callout}
 
-The following example illustrates classic TDD for a standard deviation
-function, `std()`.
+以下示例说明了标准差函数“std()”的经典 TDD。
 
-To start, we write a test for computing the standard deviation from
-a list of numbers as follows:
+首先，我们编写一个测试来计算来自数字列表的标准差，如下所示：
 
 ~~~
 from mod import std
@@ -67,8 +45,7 @@ def test_std1():
 ~~~
 {: .python}
 
-Next, we write the _minimal_ version of `std()` that will cause `test_std1()` to
-pass:
+接下来，我们编写 `std()` 的 _minimal_ 版本，这将导致 `test_std1()` 通过：
 
 ~~~
 def std(vals):
@@ -77,12 +54,7 @@ def std(vals):
 ~~~
 {: .python}
 
-As you can see, the minimal version simply returns the expected result for the
-sole case that we are testing.  If we only ever want to take the standard
-deviation of the numbers 0.0 and 2.0, or 1.0 and 3.0, and so on, then this
-implementation will work perfectly. If we want to branch out, then we probably
-need to write more robust code.  However, before we can write more code, we first
-need to add another test or two:
+如您所见，最小版本仅返回我们正在测试的唯一测试用例的预期结果。如果我们只想取数字 0.0 和 2.0，或 1.0 和 3.0 等的标准差，那么这个实现将完美地工作。如果我们想进行分支，那么我们可能需要编写更健壮的代码。但是，在我们编写更多代码之前，我们首先需要添加另外一两个测试：
 
 ~~~
 def test_std1():
@@ -104,7 +76,7 @@ def test_std3():
 ~~~
 {: .python}
 
-A simple function implementation that would make these tests pass could be as follows:
+使这些测试通过的简单函数实现如下：
 
 ~~~
 def std(vals):
@@ -115,9 +87,7 @@ def std(vals):
 ~~~
 {: .python}
 
-Are we done? No. Of course not. Even though the tests all pass, this is clearly
-still not a generic standard deviation function. To create a better
-implementation, TDD states that we again need to expand the test suite:
+我们完了吗？不，当然不。即使测试全部通过，这显然仍然不是通用的标准偏差函数。为了创建更好的实现，TDD 声明我们再次需要扩展测试套件：
 
 ~~~
 def test_std1():
@@ -149,21 +119,15 @@ def test_std5():
 ~~~
 {: .python}
 
-At this point, we may as well try to implement a generic standard deviation
-function. Recall:
+此时，我们不妨尝试实现一个通用的标准差函数。 记起：
 
-![Standard Deviation](../img/std.png)
+![标准偏差](../img/std.png)
 
-We would spend more time trying to come up with clever
-approximations to the standard deviation than we would spend actually coding it.
+我们将花费更多的时间来尝试对标准偏差进行巧妙的近似，而不是实际编码它。
 
-1. Copy the five tests above into a file called test_std.py
-2. Open mod.py
-3. Add an implementation that actually calculates a standard deviation.
-4. Run the tests above. Did they pass?
+1. 将上面的五个测试复制到一个名为test_std.py的文件中
+2. 打开mod.py
+3. 添加一个实际计算标准偏差的实现。
+4. 运行上述测试。 他们通过了吗？
 
-It is important to note that we could improve this function by
-writing further tests.  For example, this `std()` ignores the situation where infinity
-is an element of the values list. There is always more that can be tested.  TDD
-prevents you from going overboard by telling you to stop testing when you
-have achieved all of your use cases.
+需要注意的是，我们可以通过编写进一步的测试来改进此功能。例如，这个 `std()` 忽略了无穷大是值列表元素的情况。总是有更多可以测试的。TDD 通过告诉您在完成所有用例后停止测试来防止您过火。

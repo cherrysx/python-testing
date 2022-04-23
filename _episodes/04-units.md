@@ -1,66 +1,42 @@
 ---
-title: Unit Tests
+title: 单元测试
 teaching: 10
 exercises: 0
 questions:
-- "What is a unit of code?"
+- "什么是代码单位？"
 objectives:
-- "Understand that functions are the atomistic unit of software."
-- "Understand that simpler units are easier to test than complex ones."
-- "Understand how to write a single unit test."
-- "Understand how to run a single unit test."
-- "Understand how test fixtures can help write tests."
+- "了解函数是软件的原子单元。"
+- "了解简单的单元比复杂的单元更容易测试。"
+- "了解如何编写单个单元测试。"
+- "了解如何运行单个单元测试。"
+- "了解测试test fixture如何帮助编写测试。"
 keypoints:
-- "Functions are the atomistic unit of software."
-- "Simpler units are easier to test than complex ones."
-- "A single unit test is a function containing assertions."
-- "Such a unit test is run just like any other function."
-- "Running tests one at a time is pretty tedious, so we will use a framework instead."
+- "函数是软件的原子单元。"
+- "简单的单元比复杂的单元更容易测试。"
+- "单个单元测试是一个包含断言的函数。"
+- "这样的单元测试就像任何其他功能一样运行。"
+- "一次运行一个测试是相当乏味的，所以我们将使用一个框架来代替。"
 ---
 
-Unit tests are so called because they exercise the functionality of the code by
-interrogating individual functions and methods. Functions and methods can often
-be considered the atomic units of software because they are indivisible.
-However, what is considered to be the smallest code _unit_ is subjective. The
-body of a function can be long or short, and shorter functions are arguably
-more unit-like than long ones.
+之所以称为单元测试，是因为它们通过询问单个函数和方法来执行代码的功能。函数和方法通常可以被认为是软件的原子单元，因为它们是不可分割的。然而，什么被认为是最小的代码单元是主观的。函数的主体可以长也可以短，而较短的函数可以说比长函数更有利于单元测试。
 
-Thus what reasonably constitutes a code unit typically varies from project to
-project and language to language.  A good guideline is that if the code cannot
-be made any simpler logically (you cannot split apart the addition operator) or
-practically (a function is self-contained and well defined), then it is a unit. 
+因此，合理构成代码单元的内容通常因项目和语言而异。一个好的指导原则是，如果代码不能在逻辑上变得更简单（您不能拆分加法运算符）或实际上（函数是自包含且定义明确的），那么它就是一个单元。
 
-> ## Functions are Like Paragraphs
+> ## 函数就像段落
 >
-> Recall that humans can only hold a few ideas in our heads at once. Paragraphs
-> in books, for example, become unwieldy after a few lines. Functions, generally,
-> shouldn't be longer than paragraphs.
-> Robert C. Martin, the author of "Clean Code" said : "The first rule of
-> functions is that _they should be small_. The second rule of functions is that
-> _they should be smaller than that_." 
+> 回想一下，人类一次只能在我们的脑海中持有几个想法。例如，书中的段落在几行之后开始变得冗余。通常，函数不应长于段落。
+> 《清洁代码》的作者 Robert C. Martin说：“函数的第一条规则是：它们应该小。函数的第二条规则是：它们应该更小。”
 {: .callout}
 
-The desire to unit test code often has the effect of encouraging both the
-code and the tests to be as small, well-defined, and modular as possible.  
-In Python, unit tests typically take the form of test functions that call and make
-assertions about methods and functions in the code base.  To run these test
-functions, a test framework is often required to collect them together. For
-now, we'll write some tests for the mean function and simply run them
-individually to see whether they fail. In the next session, we'll use a test
-framework to collect and run them.
+对代码进行单元测试的愿望通常具有鼓励代码和测试尽可能小、定义良好和模块化的效果。在Python中，单元测试通常采用测试函数的形式，这些函数调用并断言代码库中的方法和函数。为了运行这些测试功能，通常需要一个测试框架将它们收集在一起。现在，我们将为mean函数编写一些测试，并简单地单独运行它们以查看它们是否失败。在下一个会话中，我们将使用一个测试框架来收集和运行它们。
 
-## Unit Tests Are Just Functions
+## 单元测试只是函数
 
-Unit tests are typically made of three pieces, some set-up, a number of
-assertions, and some tear-down. Set-up can be as simple as initializing the
-input values or as complex as creating and initializing concrete instances of a
-class. Ultimately, the test occurs when an assertion is made, comparing the
-observed and expected values. For example, let us test that our mean function 
-successfully calculates the known value for a simple list.
+单元测试通常由三部分组成，一些设置前处理操作、一些断言和一些后处理操作。设置可以像初始化输入值一样简单，也可以像创建和初始化类的具体实例一样复杂。最终，测试发生在做出断言时，比较观察值和预期值。例如，让我们测试我们的均值函数是否成功计算了一个简单列表的已知值。
 
-Before running the next code, save your `mean` function to a file called mean.py in the working directory.
+在运行下一个代码之前，将您的`mean`函数保存到工作目录中名为mean.py的文件中。
 
-You can use this code to save to file:
+您可以使用此代码保存到文件：
 
 ~~~
 def mean(num_list):
@@ -75,7 +51,7 @@ def mean(num_list):
 ~~~
 {: .python}
 
-Now, back in your Jupyter Notebook run the following code:
+现在，回到Jupyter Notebook中运行以下代码：
 
 ~~~
 from mean import *
@@ -88,16 +64,15 @@ def test_ints():
 ~~~
 {: .python}
 
-The test above: 
-- sets up the input parameters (the simple list [1, 2, 3, 4, 5]);
-- collects the observed result;
-- declares the expected result (calculated with our human brain);
-- and compares the two with an assertion.
+上面的测试：
+- 设置输入参数（简单列表 [1, 2, 3, 4, 5]）；
+- 收集观察结果；
+- 声明预期结果（用我们的人脑计算）；
+- 并将两者与断言进行比较。
 
-A unit test suite is made up of many tests just like this one. A single
-implemented function may be tested in numerous ways.
+一个单元测试套件由许多测试组成，就像这个一样。可以以多种方式测试单个实现的功能。
 
-In a file called `test_mean.py`, implement the following code:
+在名为`test_mean.py`的文件中，实现以下代码：
 
 ~~~
 from mean import *
@@ -137,7 +112,7 @@ def test_complex():
 ~~~
 {: .python}
 
-Use Jupyter Notebook to import the `test_mean` package and run each test like this:
+使用Jupyter Notebook导入`test_mean`包并像这样运行每个测试：
 
 ~~~
 from test_mean import *
@@ -146,9 +121,6 @@ test_ints()
 test_zero()
 test_double()
 test_long()
-test_complex()  ## Please note that this one might fail. You'll get an error message showing which tests failed
+test_complex()  ## 请注意，这可能会失败。您将收到一条错误消息，显示哪些测试失败
 ~~~
 {: .python}
-
-
-Well, **that** was tedious.

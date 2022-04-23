@@ -6,37 +6,35 @@ subtitle: Reference
 ## Glossary
 
 
-assert
-:   A keyword that halts code execution when its argument is false.
+断言assert
+:   当参数为假时停止代码执行的关键字。
 
-continuous integration
+持续集成continuous integration
 :   Automatically checking the building and testing process accross platforms.
 
-exceptions
-:   Customizeable cousin of assertions.
+异常exceptions
+:   可自定义的断言。
 
 except
-:   A keyword used to catch and carefully handle that exception.
+:   用于捕获并仔细处理该异常的关键字。
 
-integration test
-:   Tests that check that various pieces of the software work together as expected.
-
-`pytest`
-:   A Python package with testing utilities.
+集成测试integration test
+:   检查软件的各个部分是否按预期协同工作的测试。
 
 `pytest`
-:   A command-line program that collects and runs unit tests.
+:   带有测试程序的Python 包。
 
-regression test
-:   Tests that defend against new bugs, or regressions,
-    which might appear due to new software and updates.
+`pytest`
+:   收集和运行单元测试的命令行程序。
 
-test-driven development
-:   A software development strategy in which the tests are written before the code.
+回归测试regression test
+:   防御新错误或回归的测试，这些错误或回归可能由于新软件和更新而出现。
+
+测试驱动开发test-driven development
+:   一种在代码之前编写测试的软件开发策略。
 
 try
-:   A keyword that guards a piece of code which may throw an exception.
+:   保护一段可能引发异常的代码的关键字。
 
-unit test
-:   Tests that investigate the behavior of units of code
-    (such as functions, classes, or data structures).
+单元测试unit test
+:   调查代码单元（例如函数、类或数据结构）行为的测试。

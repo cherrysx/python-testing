@@ -6,11 +6,11 @@
 carpentry: "swc"
 
 # Overall title for pages.
-title: "Python Testing and Continuous Integration"
+title: "Python测试(pytest)和持续集成(CI)"
 
 # Life cycle stage of the lesson
 # possible values: "pre-alpha", "alpha", "beta", "stable"
-life_cycle: "alpha"
+life_cycle: "stable"
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
@@ -24,7 +24,7 @@ kind: "lesson"
 repository: <USERNAME>/<PROJECT>
 
 # Email address, no mailto:
-email: "team@carpentries.org"
+email: "pan_qu@qq.com"
 
 
 # Sites.

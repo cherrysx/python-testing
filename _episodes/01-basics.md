@@ -1,57 +1,41 @@
 ---
-title: Basics of Testing
+title: 测试基础
 teaching: 5
 exercises: 0
 questions:
-- "Why test?"
+- "为什么要测试？"
 objectives:
-- "Understand the place of testing in a scientific workflow."
-- "Understand that testing has many forms."
+- "了解测试在科学工作流程中的位置。"
+- "了解测试有多种形式。"
 keypoints:
-- "Tests check whether the observed result, from running the code, is what was expected ahead of time."
-- "Tests should ideally be written before the code they are testing is written, however some tests must be written after the code is written."
-- "Assertions and exceptions are like alarm systems embedded in the software, guarding against exceptional bahavior."
-- "Unit tests try to test the smallest pieces of code possible, usually functions and methods."
-- "Integration tests make sure that code units work together properly."
-- "Regression tests ensure that everything works the same today as it did yesterday."
+- "测试检查运行代码所观察到的结果是否是提前预期的结果。"
+- "理想情况下，测试应该在软件代码之前编写，但是有些测试必须在软件代码之后编写。"
+- "断言和异常就像嵌入在软件中的警报系统，防止异常行为发生。"
+- "单元测试试图测试尽可能小的代码片段，通常是函数和方法。"
+- "集成测试确保代码单元正常工作。"
+- "回归测试确保今天的一切都和昨天一样。"
 ---
 
-The first step toward getting the right answers from our programs is to assume
-that mistakes *will* happen and to guard against them.  This is called
-**defensive programming** and the most common way to do it is to add alarms and
-tests into our code so that it checks itself.
+从我们的程序中获得正确答案的第一步是假设错误*会*发生并防范它们。这称为**防御性编程**，最常见的方法是在我们的代码中添加警报和测试，以便它自我检查。
 
-**Testing** should be a seamless part of scientific software development process.
-This is analogous to experiment design in the experimental science world:
+**测试**应该是科学软件开发过程的无缝部分。这类似于实验科学世界中的实验设计：
 
-- At the beginning of a new project, tests can be used to help guide the 
-  overall architecture of the project.
-- The act of writing tests can help clarify how the software should be perform when you are done. 
-- In fact, starting to write the tests _before_ you even write the software 
-  might be advisable. (Such a practice is called _test-driven development_, 
-  which we will discuss in greater detail [later in the lesson](09-tdd.html).)
+- 在新项目开始时，可以使用测试用例来帮助指导项目的整体架构。
+- 编写测试用例的行为可以帮助阐明软件在完成后应该如何执行。
+- 事实上，在编写软件之前_开始编写测试用例可能是可取的。（这种做法称为_测试驱动开发_，我们将更详细地讨论[本课后面的内容](09-tdd.html)。）
 
-There are many ways to test software, such as:
+有很多方法可以测试软件，例如：
 
-- Assertions
-- Exceptions
-- Unit Tests
-- Regresson Tests
-- Integration Tests
+- 断言
+- 例外
+- 单元测试
+- 回归测试
+- 集成测试
 
-*Exceptions and Assertions*: While writing code, `exceptions` and `assertions` 
-can be added to sound an alarm as runtime problems come up. These kinds of 
-tests, are embedded in the software iteself and handle, as their name implies, 
-exceptional cases rather than the norm. 
+*异常和断言*：在编写代码时，可以添加“异常”和“断言”以在出现运行时问题时发出警报。 这些类型的测试嵌入在软件本身中，并且顾名思义，处理的是例外情况而不是规范。
 
-*Unit Tests*: Unit tests investigate the behavior of units of code (such as
-functions, classes, or data structures). By validating each software unit
-across the valid range of its input and output parameters, tracking down
-unexpected behavior that may appear when the units are combined is made vastly
-simpler.
+*单元测试*：单元测试调查代码单元（例如函数、类或数据结构）的行为。通过在其输入和输出参数的有效范围内验证每个软件单元，跟踪单元组合时可能出现的意外行为变得非常简单。
 
-*Regression Tests*: Regression tests defend against new bugs, or regressions,
-which might appear due to new software and updates. 
+*回归测试*：回归测试可防御新的错误或回归，这些错误或回归可能由于新软件和更新而出现。
 
-*Integration Tests*: Integration tests check that various pieces of the
-software work together as expected. 
+*集成测试*：集成测试检查软件的各个部分是否按预期协同工作。

@@ -1,42 +1,33 @@
 ---
-title: Design by Contract
+title: 契约式设计
 teaching: 5
 exercises: 10
 questions:
-- "What is Design by Contract?"
+- "什么是契约式设计？"
 objectives:
-- "Learn to use Python contracts, PyContracts."
-- "Learn to define simple and complicated contracts."
-- "Learn about pre-, post- and invariant- conditions of a contract."
+- "学习使用Python契约，PyContracts。"
+- "学习定义简单和复杂的契约。"
+- "了解契约的前置、后置和不变条件。"
 keypoints:
-- "Design by Contract is a way of using Assertions for interface specification."
-- "Pre-conditions are promises you agree to obey when calling a function."
-- "Post-conditions are promises a function agrees to obey returning to you."
-author: markcmiller86
+- "契约式设计是一种将断言用于接口规范的方式。"
+- "前置条件是您在调用函数时同意遵守的承诺。"
+- "后置条件是函数同意服从返回给您的承诺。"
 ---
 
-In [Design by Contract](https://en.wikipedia.org/wiki/Design_by_contract), the interaction between 
-an application and functions in a library is managed, metaphorically, by a *contract*. A contract for a
-function typically involves three different types of requirements.
+在契约式设计中，应用程序和库中的函数之间的交互是由*契约*管理的。一项功能的契约通常涉及三种不同类型的需求。
 
-* Pre-conditions: Things that must be true before a function begins its work.
-* Post-conditions: Things that are guaranteed to be true after a function finishes its work.
-* Invariant-conditions: Things that are guaranteed not to change as a function does its work.
+* 前提条件：在函数开始工作之前必须为真的事情。
+* 后置条件：函数完成工作后保证为真的事情。
+* 不变条件：保证不会随着函数工作而改变的事物。
 
-In the examples here, we use [PyContracts](https://andreacensi.github.io/contracts/index.html#) which uses
-Python [decorator](https://www.python.org/dev/peps/pep-0318) notation. **Note**: In the current implementation
-of PyContracts, only pre- and post-conditions are implemented. Invariants, if needed, may be handled using
-ordinary assertions. Finally, to simplify the examples here, the following imports are assumed...
+在此处的示例中，我们使用[PyContracts](https://andreacensi.github.io/contracts/index.html#)，它使用Python decorator符号。**注意**：在PyContracts的当前实现中，仅实现了前置条件和后置条件。如果需要，可以使用普通断言来处理不变量。最后，为了简化此处的示例，假设以下导入...
 
 ~~~ {.python}
 from math import sqrt, log
 from contracts import contract, new_contract
 ~~~
 
-To demonstrate the use of contracts, in the example here, we implement our own version of an integer square root
-function for perfect squares, called `perfect_sqrt`. We define a contract that indicates the caller is required
-to pass an integer value greater than or equal to zero. This is an example of a pre-condition. Next, the function
-is required to return an integer greater than or equal to zero. This is an example of a post-condition.
+为了演示契约的使用，在这里的示例中，我们实现了我们自己版本的完美平方整数平方根函数，称为“perfect_sqrt”。我们定义了一个契约，指示调用者需要传递一个大于或等于零的整数值。这是一个前置条件的例子。接下来，该函数需要返回一个大于或等于零的整数。 这是一个后置条件的例子。
 
 ~~~ {.python}
 @contract(x='int,>=0',returns='int,>=0')
@@ -46,7 +37,7 @@ def perfect_sqrt(x):
     return iretval if iretval == retval else retval
 ~~~
 
-Now, lets see what happens when we use this function to compute square roots.
+现在，让我们看看当我们使用这个函数来计算平方根时会发生什么。
 
 ~~~ {.output}
 >>> perfect_sqrt(4)
@@ -55,12 +46,9 @@ Now, lets see what happens when we use this function to compute square roots.
 9
 ~~~
 
-Values of 4 and 81 are both integers. So, in these cases the caller has obeyed the pre-conditions of the contract.
-In addition, because both 4 and 81 are perfect squares, the function correctly returns their integer square root.
-So, the funtion has obeyed the post-conditions of the contract.
+4和81的值都是整数。因此，在这些情况下，调用者已经遵守了契约的先决条件。此外，因为4和81都是完全平方，所以函数正确地返回它们的整数平方根。因此，该功能符合契约的后置条件。
 
-Now, lets see what happens when the caller fails to obey the pre-conditions of the contract by passing a negative
-number.
+现在，让我们看看当调用者通过传递一个负数来会发生什么(没有遵守契约的先决条件时)。
 
 ~~~ {.output}
 >>> perfect_sqrt(-4)
@@ -76,8 +64,7 @@ checking: int,>=0   for value: Instance of <type 'int'>: -4
 Variables bound in inner context:
 ~~~
 
-An exception is raised indicating a failure to obey the pre-condition for passing a value greather than or equal to zero.
-Next, lets see what happens when the function cannot obey the post-condition of the contract.
+引发异常，指示未能遵守传递大于或等于零的值的先决条件。接下来，让我们看看当函数不能遵守契约的后置条件时会发生什么。
 
 ~~~ {.output}
 >>> perfect_sqrt(83)
@@ -97,16 +84,11 @@ checking: int,>=0                                     for value: Instance of <ty
 Variables bound in inner context:
 ~~~
 
-For the value of 83, although the caller obeyed the pre-conditions of the contract, the function does not
-return an integer value. It fails the post-condition and an exception is raised.
+对于83的值，虽然调用者遵守了契约的前置条件，但函数并没有返回整数值。它使后置条件失败并引发异常。
 
-### Extending Contracts
+### 扩展契约
 
-Sometimes, the simple built-in syntax for defining contracts is not sufficient. In this case, contracts can
-be extended by defining a function that implements a new contract. For example,
-[number theory tells us](http://mathworld.wolfram.com/SquareNumber.html) that all perfect squares end in a
-digit of 1,4,5,6, or 9 or end in an even number of zero digits. We can define a new contract that checks
-these conditions.
+有时，定义契约的简单内置语法是不够的。在这种情况下，可以通过定义实现新契约的函数来扩展契约。例如，[数论告诉我们](http://mathworld.wolfram.com/SquareNumber.html) 所有完美正方形都以1、4、5、6或9的数字结尾，或者以偶数个零结尾。 我们可以定义一个检查这些条件的新契约。
 
 ~~~ {.python}
 @new_contract
@@ -118,7 +100,7 @@ def ends_ok(x):
     raise ValueError("%s doesn't end in 1,4,5,6 or 9 or even number of zeros"%x)
 ~~~
 
-We can then use this function, `ends_ok`, in a contract specification
+然后我们可以在契约规范中使用这个函数，`ends_ok`
 
 ~~~ {.python}
 @contract(x='int,ends_ok,>=0',returns='int,>=0')
@@ -126,8 +108,7 @@ def perfect_sqrt2(x):
     return int(sqrt(x))
 ~~~
 
-Let's see what happens when we try to use this `perfect_sqrt2` function on a number that ends in an
-odd number of zeros.
+让我们看看当我们尝试对以奇数个零结尾的数字使用这个`perfect_sqrt2`函数时会发生什么。
 
 ~~~ {.output}
 >>> perfect_sqrt2(49)
@@ -147,24 +128,12 @@ checking: int,ends_ok,>=0  for value: Instance of <type 'int'>: 1000
 Variables bound in inner context:
 ~~~
 
-### Performance Considerations
+### 性能注意事项
 
-Depending on the situation, checking validity of a contract can be expensive relative to the _real_ work
-the function is supposed to perform. For example, suppose a function is designed to perform a binary search
-on a sorted list of numbers. A reasonable pre-condition for the operation is that the list it is given to
-search is indeed sorted. If the list is large, checking that it is properly sorted is even more expensive
-than performing a binary search.
+根据情况，检查契约的有效性相对于函数应该执行的_real_工作来说可能是昂贵的。例如，假设一个函数被设计为对一个排序好的数字列表执行二分查找。该操作的一个合理的前提条件是它提供给搜索的列表确实是排序的。如果列表很大，检查它是否正确排序比执行二进制搜索更昂贵。
 
-In other words, contracts can negatively impact performance. For this reason, it is desirable for callers to
-have a way to disable contract checks to avoid always paying whatever performance costs they incur. In PyContracts,
-this can be accomplished either by setting an environment variable, `DISABLE_CONTRACTS` or by a call to
-`contracts.disable_all()` **before** any `@contracts` statements are processed by the Python interpreter.
-This allows developers to keep the checks in place while they are developing code and then disable them once
-they are sure their code is working as expected.
+换句话说，契约会对性能产生负面影响。出于这个原因，调用者最好有一种方法来禁用契约检查，以避免总是支付他们产生的任何性能成本。 在PyContracts中，任何`@contracts`语句由Python解释器处理来完成之前，这可以通过设置环境变量`DISABLE_CONTRACTS`或调用`contracts.disable_all()`。这允许开发人员在开发代码时保持检查到位，然后在他们确定他们的代码按预期工作时禁用它们。
 
-Contracts are most helpful in the process of _developing_ code. So, it is often good practice to write
-contracts for functions _before_ the function implementations. Later, when development is complete and
-performance becomes important, contracts can be disabled. In this way, contracts are handled much like
-assertions. They are useful in developing code and then disabled once development is complete.
+契约在_开发_代码的过程中最有帮助。因此，在函数实现之前_为函数编写契约通常是一种好习惯。后来，当开发完成并且性能变得重要时，可以禁用契约。通过这种方式，契约的处理方式与断言非常相似。它们在开发代码时很有用，然后在开发完成后禁用。
 
 [Learn more about Design by Contract in Python](https://andreacensi.github.io/contracts/index.html#)

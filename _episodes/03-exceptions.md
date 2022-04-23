@@ -1,24 +1,21 @@
 ---
-title: Exceptions
+title: 异常
 teaching: 10
 exercises: 0
 questions:
-- "How do I handle unusual behavior while the code runs?"
+- "代码运行时如何处理异常行为？"
 objectives:
-- "Understand that exceptions are effectively specialized runtime tests"
-- "Learn when to use exceptions and what exceptions are available"
+- "了解异常实际上是专门的运行时测试"
+- "了解何时使用异常以及可用的异常"
 keypoints:
-- "Exceptions are effectively specialized runtime tests"
-- "Exceptions can be caught and handled with a try-except block"
-- "Many built-in Exception types are available"
+- "异常实际上是专门的运行时测试"
+- "可以使用 try-except 块捕获和处理异常"
+- "许多内置的异常类型可用"
 ---
 
-Exceptions are more sophisticated than assertions. They are the standard error 
-messaging system in most modern programming languages.  Fundamentally, when an 
-error is encountered, an informative exception is 'thrown' or 'raised'.
+异常比断言更复杂。它们是大多数现代编程语言中的标准错误消息系统。从根本上说，当遇到错误时，会“抛出”或“引发”信息异常。
 
-For example, instead of the assertion in the case before, an exception can be
-used.
+例如，可以使用异常来代替前面案例中的断言。
 
 ~~~
 def mean(num_list):
@@ -30,15 +27,9 @@ def mean(num_list):
 ~~~
 {: .python}
 
-Once an exception is raised, it will be passed upward in the program scope.
-An exception be used to trigger additional error messages or an alternative
-behavior. rather than immediately halting code
-execution, the exception can be 'caught' upstream with a try-except block.
-When wrapped in a try-except block, the exception can be intercepted before it reaches
-global scope and halts execution.
+一旦引发异常，它将在程序范围内向上传递。异常用于触发其他错误消息或替代行为。可以使用 try-except 块在上游“捕获”异常，而不是立即停止代码执行。 当包装在try-except块中时，可以在异常到达全局范围并停止执行之前拦截异常。
 
-To add information or replace the message before it is passed upstream, the try-catch
-block can be used to catch-and-reraise the exception:
+要在消息传递到上游之前添加信息或替换消息，可以使用try-catch块来捕获并重新引发异常：
 
 ~~~
 def mean(num_list):
@@ -50,9 +41,7 @@ def mean(num_list):
 ~~~
 {: .python}
 
-Alternatively, the exception can simply be handled intelligently. If an
-alternative behavior is preferred, the exception can be disregarded and a
-responsive behavior can be implemented like so:
+或者，可以简单地智能处理异常。如果首选替代行为，则可以忽略异常，并且可以像这样实现响应行为：
 
 ~~~
 def mean(num_list):
@@ -63,8 +52,7 @@ def mean(num_list):
 ~~~
 {: .python}
 
-If a single function might raise more than one type of exception, each can be
-caught and handled separately.
+如果单个函数可能引发不止一种类型的异常，则可以分别捕获和处理每个异常。
 
 ~~~
 def mean(num_list):
@@ -79,15 +67,11 @@ def mean(num_list):
 ~~~
 {: .python}
 
-> ## What else could go wrong?
+> ## 还有什么问题？
 >
-> 1. Think of some other type of exception that could be raised by the try 
-> block.
-> 2. Guard against it by adding an except clause.
-> 3. Use the mean function in three different ways, so that you cause each
-> exceptional case.
+> 1. 想想try块可能引发的其他类型的异常。
+> 2. 通过添加一个except子句来防范它。
+> 3. 以三种不同的方式使用均值函数，以便您引发每种异常情况。
 {: .callout}
 
-Exceptions have the advantage of being simple to include and powerfully helpful
-to the user. However, not all behaviors can or should be found with runtime
-exceptions. Most behaviors should be validated with unit tests.
+异常的优点是易于使用并且对用户有很大帮助。但是，并非所有行为都可以或应该在运行时异常中找到。大多数行为都应该通过单元测试进行验证。

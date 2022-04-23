@@ -3,85 +3,36 @@ layout: lesson
 root: .
 ---
 
-In this lesson we use a Python library called pytest. 
-Basic understanding of Python variables and functions are a
-necessary prerequisite. Some previous experience with the shell
-is expected, *but isn't mandatory*.
+在本课中，我们使用一个名为pytest的Python库。
 
-> ## Prerequisites
+> ## 前提
 >
-> Nothing to do: you're ready to go!
+> 基本了解Python变量和函数是必要的先决条件。需要有一些使用shell脚本的经验，*但不是强制性的*。
 {: .prereq}
 
-Before relying on a new experimental device, an experimental scientist always
-establishes its accuracy. A new detector is calibrated when the scientist
-observes its responses to known input signals. The results of this
-calibration are compared against the _expected_ response. **An experimental
-scientist would never conduct an experiment with uncalibrated detectors - that
-would be unscientific. So too, simulations and analysis with untested
-software do not constitute science.**
+在依赖新的实验设备之前，实验科学家总是要确定其准确性。当科学家观察到它对已知输入信号的响应时，就会校准一个新的探测器。将此校准的结果与_expected_响应进行比较。**实验科学家永远不会使用未经校准的探测器进行实验——那是不科学的。同样，使用未经测试的软件进行模拟和分析也不科学。**
 
-> ## You only know what you test
+> ## 你测试了什么
 >
-> **You can only know by testing it.** Software bugs are hiding in all
-> nontrivial software. Testing is the process by which those bugs are
-> systematically exterminated before they have a chance to cause a paper
-> retraction. In software tests, just like in device calibration, expected
-> results are compared with observed results in order to establish accuracy.
+> **只有通过测试才能知道。** 软件bug隐藏在所有重要的软件中。测试是系统地消除这些错误的过程。在软件测试中，就像在设备校准中一样，将预期结果与观察结果进行比较以确定准确性。
 {: .callout}
 
-The collection of all of the tests for a given code is known as the _test
-suite_. You can think of the test suite as a bunch of pre-canned experiments
-that anyone can run. If all of the test pass, then the code is at least
-partially trustworthy. If any of the tests fail then the code is known to be
-incorrect with respect to whichever case failed.  After this lesson, you will
-know to not trust software when its tests do not _cover_ its claimed
-capabilities and when its tests do not pass.
+给定代码的所有测试用例的集合称为**测试套件**。你可以把测试套件想象成一堆任何人都可以运行的预制实验。如果所有的测试都通过了，那么代码至少是部分可信的。如果任何测试失败，那么无论哪种情况失败，都知道代码是不正确的。在本课之后，您将知道当软件的测试没有**覆盖**其声称的功能以及当它的测试没有通过时，不要信任该软件。
 
-> ## Managing Expectations
+> ## 管理期望
 >
-> In the same way that your scientific domain has expectations concerning
-> experimental accuracy, it likely also has expectations concerning allowable
-> computational accuracy. These considerations should surely come into play
-> when you evaluate the acceptability of your own or someone else's software.
+> 就像科学领域对实验精度有期望一样，它也可能对允许的计算精度有期望。当您评估自己或其他人的软件的可接受性时，这些考虑因素肯定会发挥作用。
 {: .callout}
 
-In most other programming endeavors, if code is fundamentally wrong - even
-for years at a time - the impact of this error can be relatively small.
-Perhaps a website goes down, or a game crashes, or a days worth of writing is
-lost to a bug in your word processor. Scientific code, on the other hand,
-controls planes, weapons systems, satellites, agriculture, and most importantly
-scientific simulations and experiments. If the software that governs the
-computational or physical experiment is wrong, then disasters (such as false
-claims in a publication) will result.
+在大多数其他编程工作中，如果代码从根本上是错误的——即使一次是几年——这个错误的影响可能相对较小。可能是某个网站出现故障，或者游戏崩溃，或者由于文字处理器中的错误而浪费了几天的写作时间。另一方面，科学代码控制飞机、武器系统、卫星、农业，最重要的是科学模拟和实验。如果管理计算或物理实验的软件有误，就会导致灾难。
 
-This is not to say that scientists have a monopoly on software testing, simply
-that software cannot be called _scientific_ unless it has been validated.
+这并不是说科学家垄断了软件测试，只是说除非经过验证，否则软件不能被称为“科学”。
 
-> ## Code without tests... is legacy code!
+> ## 没有测试的代码......是遗留代码！
 >
-> In *[Working Effectively with Legacy Code][feathers-legacy-code]*,
-> Michael Feathers defines legacy code as "any code without tests". This definition
-> draws on the fact that after its initial creation, tests provide
-> a powerful guide to other developers (and to your forgetful self, a few months
-> in the future) about how each function is meant to be used. Without runnable
-> tests to provide examples of code use, even brand new programs are unsustainable.
+> 在 *[Working Effectively with Legacy Code][feathers-legacy-code]* 中，Michael Feathers将遗留代码定义为“任何未经测试的代码”。这个定义基于这样一个事实：即在最初创建之后，测试为其他开发人员（以及你健忘的自己，几个月后）提供了关于如何使用每个函数的强大指南。如果没有可运行的测试来提供代码使用示例，即使是全新的程序也是不可持续的。
 {: .callout}
 
-Testing is the calibration step of the computational simulation and analysis
-world: it lets the scientist trust their own work on a fundamental level and
-helps others to understand and trust their work as well.
-Furthermore, tests help you to never fix a bug a second time. Once a bug has
-been caught and a test has been written, that particular bug can never again
-re-enter the codebase unnoticed. So, whether motivated by principles or a
-desire to work more efficiently, all scientists can benefit from testing.
-
-> ## Where these lessons are from
->
-> Note that this testing lesson was adapted from the Testing chapter in
-> *[Effective Computation In Physics](http://physics.codes)*
-> by Anthony Scopatz and Kathryn Huff.
-> It is often quoted directly.
-{: .callout}
+测试是计算模拟和分析领域的校准步骤：它让科学家从根本上信任自己的工作，并帮助其他人理解和信任他们的工作。此外，测试可以帮助您永远不会再次修复错误。一旦一个bug被捕获并编写了一个测试，这个特定的bug就再也不会在不被注意的情况下重新进入代码库。因此，无论是出于原则动机还是希望更有效地工作，所有科学家都可以从测试中受益。
 
 [feathers-legacy-code]: http://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052/

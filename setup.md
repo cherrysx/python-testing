@@ -1,10 +1,10 @@
 ---
 layout: page
-title: Setup
+title: 准备事项
 root: .
 ---
 
-There is no need to download any data files for this lesson, but there are some software requirements.
+本课无需下载任何数据文件，但有一些软件要求。
 
-1. Install Jupyter Notebooks (More details [on their website](https://jupyter.org/)) 
-2. Install PyContracts (Installation instructions [on their website](https://pypi.org/project/PyContracts/))
+1. 安装Jupyter Notebooks（更多详情请访问[jupyter](https://jupyter.org/)）
+2. 安装PyContracts（[安装说明](https://pypi.org/project/PyContracts/)）

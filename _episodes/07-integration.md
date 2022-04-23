@@ -1,52 +1,31 @@
 ---
-title: Integration and Regression Tests
+title: 集成和回归测试
 teaching: 10
 exercises: 0
 questions:
-- "How do we test more than a single unit of software?"
+- "我们如何测试多个软件单元？"
 objectives:
-- "Understand the purpose of integration and regression tests"
-- "Understand how to implement an integration test"
+- "了解集成和回归测试的目的"
+- "了解如何实施集成测试"
 keypoints:
-- "Integration tests interrogate the coopration of pieces of the software"
-- "Regression tests use past behavior as the expected result"
+- "集成测试询问软件各部分的协作"
+- "回归测试使用过去的行为作为预期结果"
 ---
 
-## Integration Tests
+## 集成测试
 
-You can think of a software project like a clock. Functions and classes are
-the gears and cogs that make up the system. On their own, they can be of the highest
-quality. Unit tests verify that each gear is well made. However, the clock still
-needs to be put together. The gears need to fit with one another.
+你可以把一个软件项目想象成一个时钟。函数和类是构成系统的齿轮和齿轮。就其本身而言，它们可以是最高质量的。单元测试验证每个齿轮都制作精良。但是，时钟仍然需要放在一起。齿轮需要相互配合。
 
-> ## Telling The Time
+> ## 时钟显示时间
 >
-> _Integration tests_ are the class of tests that verify that multiple moving
-> pieces and gears inside the clock work well together. Where unit tests
-> investigate the gears, integration tests look at the position of the hands to
-> determine if the clock can tell time correctly.  They look at the system as a
-> whole or at its subsystems.  Integration tests typically function at a higher
-> level conceptually than unit tests.  Thus, writing integration tests also
-> happens at a higher level.
+> _集成测试_是一类测试，用于验证时钟内的多个运动部件和齿轮是否可以很好地协同工作。单元测试调查齿轮，集成测试查看指针的位置，以确定时钟是否能正确报时。 他们将系统视为一个整体或其子系统。 集成测试通常在概念上比单元测试在更高层次上运行。 因此，编写集成测试也发生在更高的层次上。
 {: .callout}
 
-Because they deal with gluing code together, there are typically fewer
-integration tests in a test suite than there are unit tests.  However, integration
-tests are no less important. Integration tests are essential for having adequate
-testing. They encompass all of the cases that you cannot hit through plain unit
-testing.
+因为它们处理将代码粘合在一起，所以测试套件中的集成测试通常比单元测试少。 然而，集成测试同样重要。 集成测试对于进行充分的测试至关重要。 它们涵盖了您无法通过简单的单元测试来解决的所有情况。
 
-Sometimes, especially in probabilistic or stochastic codes, the precise behavior
-of an integration test cannot be determined beforehand.  That is OK. In these
-situations it is acceptable for integration tests to verify average or aggregate
-behavior rather than exact values. Sometimes you can mitigate nondeterminism by saving
-seed values to a random number generator, but this is not always going to be possible.
-It is better to have an imperfect integration test than no integration test
-at all.
+有时，特别是在概率或随机代码中，无法事先确定集成测试的精确行为。那没问题。在这些情况下，集成测试验证平均或聚合行为而不是精确值是可以接受的。有时您可以通过将种子值保存到随机数生成器来减轻不确定性，但这并不总是可行的。有一个不完美的集成测试总比没有集成测试好。
 
-As a simple example, consider the three functions `a()`, `b()`,
-and `c()`.  The `a()` function adds one to a number, `b()` multiplies a number
-by two, and `c()` composes them.  These functions are defined as follows:
+作为一个简单的例子，考虑三个函数 `a()`、`b()` 和 `c()`。 `a()` 函数将一个数字加一，`b()` 将一个数字乘以2，然后 `c()` 组合它们。这些函数定义如下：
 
 ~~~
 def a(x):
@@ -60,13 +39,9 @@ def c(x):
 ~~~
 {: .python}
 
-The `a()` and `b()` functions can each be unit tested because they each do one thing.
-However, `c()` cannot be truly unit tested because all of the real work is farmed
-out to `a()` and `b()`. Testing `c()` will be a test of whether `a()` and
-`b()` can be integrated together.
+`a()`和`b()`函数都可以进行单元测试，因为它们都做一件事。但是，`c()`不能真正进行单元测试，因为所有实际工作都被外包给了 `a()` 和 `b()`。 测试 `c()` 将测试 `a()` 和 `b()` 是否可以集成在一起。
 
-Integration tests still follow the pattern of comparing expected
-results to observed results. A sample `test_c()` is implemented here:
+集成测试仍然遵循将预期结果与观察结果进行比较的模式。这里实现了一个示例 `test_c()`：
 
 ~~~
 from mod import c
@@ -78,74 +53,29 @@ def test_c():
 ~~~
 {: .python}
 
-Given the lack of clarity in what is defined as a code unit, what is considered an
-integration test is also a little fuzzy.  Integration tests can range from the extremely
-simple (like the one just shown) to the very complex. A good delimiter, though, is in
-opposition to the unit tests.  If a function or class only combines two or more unit-tested
-pieces of code, then you need an integration test. If a function implements new behavior
-that is not otherwise tested, you need a unit test.
+鉴于定义为代码单元的内容不明确，什么被认为是集成测试也有点模糊。集成测试的范围可以从极其简单（如刚刚显示的那样）到非常复杂。 但是，一个好的分隔符与单元测试相反。如果一个函数或类只组合了两个或多个经过单元测试的代码，那么您需要一个集成测试。如果一个函数实现了未经测试的新行为，则需要进行单元测试。
 
-The structure of integration tests is very similar to that of unit tests. There
-is an expected result, which is compared against the observed value. However,
-what goes in to creating the expected result or setting up the code to run
-can be considerably more complicated and more involved.  Integration tests
-can also take much longer to run because of how much more work they do. This is a
-useful classification to keep in mind while writing tests. It helps separate out
-which test should be easy to write (unit) and which ones may require more
-careful consideration (integration).
+集成测试的结构与单元测试的结构非常相似。有一个预期的结果，它与观察值进行比较。 但是，创建预期结果或设置要运行的代码可能会更加复杂和复杂。集成测试也可能需要更长的时间来运行，因为它们需要做更多的工作。这是在编写测试时要牢记的有用分类。它有助于区分哪些测试应该易于编写（单元），哪些可能需要更仔细的考虑（集成）。
 
-Integration tests, however, are not the end of the story.
+然而，集成测试并不是故事的结局。
 
-## Regression Tests
+## 回归测试
 
-Regression tests are qualitatively different from
-both unit and integration tests. Rather than assuming that the test author knows what
-the expected result should be, regression tests look to the past for the
-expected behavior. The expected
-result is taken as what was previously computed for the same inputs.
+回归测试在质量上不同于单元测试和集成测试。回归测试不是假设测试作者知道预期的结果应该是什么，而是回顾过去的预期行为。预期结果被视为先前为相同输入计算的结果。
 
-> ## The Past as Truth
+> ## 作为真理的过去
 >
-> Regression tests assume that the past is "correct." They are great for
-> letting developers know when and how a code base has changed. They are not
-> great for letting anyone know why the change occurred. The change between
-> what a code produces now and what it computed before is called a
-> _regression_.
+> 回归测试假设过去是“正确的”。它们非常适合让开发人员知道代码库何时以及如何更改。它们不适合让任何人知道为什么会发生变化。代码现在生成的内容与之前计算的内容之间的变化称为_regression_。
 {: .callout}
 
-Like integration tests, regression tests tend to be high level. They often
-operate on an entire code base. They are particularly common and useful for
-physics simulators.
+与集成测试一样，回归测试往往是高级别的。它们通常在整个代码库上运行。它们对于物理模拟器特别常见和有用。
 
-A common regression test strategy spans multiple code versions. Suppose there
-is an input file for version X of a simulator. We can run the simulation
-and then store the output file for later use, typically somewhere accessible online.
-While version Y is being developed, the test suite will automatically download
-the output for version X, run the same input file for version Y, and then
-compare the two output files.  If anything
-is significantly different between them, the test fails.
+一个常见的回归测试策略跨越多个代码版本。假设有一个模拟器版本X的输入文件。我们可以运行模拟，然后存储输出文件以供以后使用，通常可以在线访问。在开发版本 Y 时，测试套件将自动下载版本 X 的输出，为版本 Y 运行相同的输入文件，然后比较两个输出文件。如果它们之间有任何显着不同，则测试失败。
 
-In the event of a regression test failure, the onus is on the current developers
-to explain why.  Sometimes there are backward-incompatible changes that had to be
-made. The regression test failure is thus justified, and a new version of the
-output file should be uploaded as the version to test against.
-However, if the test fails because the physics is wrong, then the developer should
-fix the latest version of the code as soon as possible.
+如果回归测试失败，当前的开发人员有责任解释原因。有时必须进行向后不兼容的更改。因此，回归测试失败是合理的，并且应该上传新版本的输出文件作为要测试的版本。但是，如果由于物理错误导致测试失败，则开发人员应尽快修复最新版本的代码。
 
-Regression tests can and do catch failures that integration and unit tests miss.
-Regression tests act as an automated short-term
-memory for a project.  Unfortunately, each project will have a slightly different
-approach to regression testing based on the needs of the software. Testing
-frameworks provide tools to help with building regression tests but do not offer
-any sophistication beyond what has already been seen in this chapter.
+回归测试可以并且确实可以捕获集成和单元测试遗漏的故障。回归测试充当项目的自动短期记忆。不幸的是，每个项目都会根据软件的需要采用稍微不同的回归测试方法。测试框架提供了帮助构建回归测试的工具，但不提供超出本章已经介绍的任何复杂性。
 
-Depending on the kind of project, regression tests may or may not be needed.
-They are only truly needed if the project is a simulator.
-Having a suite of
-regression tests that cover the range of physical possibilities is vital
-to ensuring that the simulator still works.
-In most other cases, you can get away with only having unit and integration
-tests.
+根据项目的类型，可能需要也可能不需要回归测试。 只有当项目是模拟器时才真正需要它们。 拥有一套涵盖物理可能性范围的回归测试对于确保模拟器仍然有效至关重要。 在大多数其他情况下，您可以只进行单元和集成测试。
 
-While more test classifications exist for more specialized situations, we have covered
-what you will need to know for almost every situation in computational physics.
+虽然针对更专业的情况存在更多的测试分类，但我们已经涵盖了您在计算物理学中几乎所有情况下需要了解的内容。

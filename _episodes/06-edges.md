@@ -1,51 +1,38 @@
 ---
-title: Edge and Corner Cases
+title: 边缘和corner测试用例
 teaching: 10
 exercises: 0
 questions:
-- "How do I catch all the possible errors?"
+- "如何捕获所有可能的错误？"
 objectives:
-- "Understand that edge cases are at the limit of the function's behavior"
-- "Write a test for an edge case"
-- "Understand that corner cases are where two edge cases meet"
-- "Write a test for a corner case"
+- "了解边缘情况处于函数行为的极限"
+- "为边缘情况编写测试"
+- "了解极端情况是两个极端情况相遇的地方"
+- "为极端测试用例编写测试"
 keypoints:
-- "Functions often fail at the edge of their range of validity"
-- "Edge case tests query the limits of a function's behavior"
-- "Corner cases are where two edge cases meet"
+- "函数经常在其有效性范围的边缘失败"
+- "边缘测试用例测试查询函数行为的限制"
+- "corner测试用例是两个边缘测试用例相遇的地方"
 ---
 
-What we saw in the tests for the mean function are called  _interior_ tests.
-The precise points that we tested did not matter. The mean function should have
-behaved as expected when it is within the valid range.
+我们在均值函数的测试中看到的称为_interior_测试。我们测试的精确点并不重要。当均值函数在有效范围内时，它的行为应该符合预期。
 
-## Edge Cases
+## 边缘测试用例
 
-The situation where the test examines either the beginning or the end of a range, but
-not the middle, is called an _edge case_. In a simple, one-dimensional
-problem, the two edge cases should always be tested along with at least
-one internal point. This ensures that you have good _coverage_ over the
-range of values.
+测试检查范围的开头或结尾但不检查中间的情况称为_edge case_。在一个简单的一维问题中，应始终测试两个边缘情况以及至少一个内部点。这可确保您在值的范围内具有良好的 _coverage_。
 
-Anecdotally, it is important to test edges cases because this is where errors tend to
-arise. Qualitatively different behavior happens at boundaries. As such,
-they tend to have special code dedicated to them in the implementation.
+有趣的是，测试边缘情况很重要，因为这是容易出现错误的地方。质量上不同的行为发生在边界处。因此，他们倾向于在实现中专门为他们编写特殊代码。
 
-> ## Consider the Fibonacci sequence
+> ## 考虑斐波那契数列
 >
-> Take a moment to recall everything you know about the Fibonacci sequence.
+> 花点时间回忆一下你所知道的关于斐波那契数列的一切。
 >
-> The fibonacci sequence is valid for all positive integers. To believe that a
-> fibonacci sequence function is accurate throughout that space, is it necessary
-> to check every expected output value of the fibonacci sequence? Given that the
-> sequence is infinite, let's hope not.
+> 斐波那契数列对所有正整数都有效 要相信斐波那契数列函数在整个空间内都是准确的，是否有必要检查斐波那契数列的每个预期输出值？鉴于序列是无限的，我们希望不是。
 >
-> Indeed, what we should probably do is test a few values within the typical
-> scope of the function, and then test values at the limit of the function's
-> behavior.
+> 实际上，我们应该做的可能是在函数的典型范围内测试一些值，然后在函数行为的限制范围内测试值。
 {: .callout}
 
-Consider the following simple Fibonacci function:
+考虑以下简单的斐波那契函数：
 
 ~~~
 def fib(n):
@@ -56,12 +43,7 @@ def fib(n):
 ~~~
 {: .python}
 
-This function has two edge cases: zero and one. For these values of `n`, the
-`fib()` function does something special that does not apply to any other values.
-Such cases should be tested explicitly. A minimally sufficient test suite
-for this function
-(assuming the `fib` function is in a file called `mod.py`)
-would be:
+此函数有两种极端情况：零和一。对于 `n` 的这些值，`fib()`函数做了一些特殊的事情，不适用于任何其他值。应明确测试此类情况。这个函数的最低限度的测试套件（假设 `fib` 函数在一个名为 `mod.py` 的文件中）将是：
 
 ~~~
 from mod import fib
@@ -83,34 +65,24 @@ def test_fib6():
 ~~~
 {: .python}
 
-Different functions will have different edge cases.
-Often, you need not test for cases that are outside the valid range, unless you
-want to test that the function fails.  In the `fib()` function negative and
-noninteger values are not valid inputs. Tests for these classes of numbers serve
-you well if you want to make sure that the function fails as expected. Indeed, we
-learned in the assertions section that this is actually quite a good idea.
+不同的功能会有不同的边缘情况。通常，您不需要测试超出有效范围的情况，除非您想测试函数是否失败。在 `fib()` 函数中，负数和非整数值不是有效输入。如果您想确保函数按预期失败，则对这些数字类别的测试可以很好地为您服务。事实上，我们在断言部分了解到这实际上是一个很好的主意。
 
-> ## Test for Graceful Failure
+> ## 测试优雅失败
 >
-> The `fib()` function should probably return the Python built-in
-> `NotImplemented` value for negative and noninteger values.
+> `fib()` 函数可能应该为负数和非整数值返回Python内置的`NotImplemented`值。
 >
-> 1. Create a file called `test_fib.py`
-> 2. Copy the three tests above into that file.
-> 3. Write **two new** tests that check for the expected return value
+> 1. 创建一个名为 `test_fib.py` 的文件
+> 2. 将上述三个测试复制到该文件中。
+> 3. 编写**两个新的**测试来检查预期的返回值
 >
-> (NotImplemented) in each case (for negative input and noninteger input
-> respectively).
+> (NotImplemented)在每种情况下（分别用于负输入和非整数输入）。
 {: .callout}
 
-Edge cases are not where the story ends, though, as we will see next.
+不过，正如我们接下来将看到的那样，边缘测试用例并不是故事的结尾。
 
 ## Corner Cases
 
-When two or more edge cases are combined, it is called a _corner case_.
-If a function is parametrized by two linear and independent variables, a test
-that is at the extreme of both variables is in a corner. As a demonstration,
-consider the case of the function `(sin(x) / x) * (sin(y) / y)`, presented here:
+当两个或多个边缘情况组合在一起时，它被称为_corner case_。如果一个函数由两个线性和自变量参数化，则处于两个变量极值的测试处于一个corner。作为演示，考虑函数 `(sin(x) / x) * (sin(y) / y)` 的情况，如下所示：
 
 ~~~
 import numpy as np
@@ -127,16 +99,9 @@ def sinc2d(x, y):
 ~~~
 {: .python}
 
-The function `sin(x)/x` is called the `sinc()` function.  We know that at
-the point where `x = 0`, then
-`sinc(x) == 1.0`.  In the code just shown, `sinc2d()` is a two-dimensional version
-of this function. When both `x` and `y`
-are zero, it is a corner case because it requires a special value for both
-variables. If either `x` or `y` but not both are zero, these are edge
-cases. If neither is zero, this is a regular internal point.
+函数`sin(x)/x`被称为 `sinc()` 函数。我们知道在 `x = 0` 处，然后 `sinc(x) == 1.0`。在刚刚显示的代码中，`sinc2d()`是该函数的二维版本。当`x`和`y`都为零时，这是一个极端情况，因为它需要两个变量的特殊值。如果`x`或`y`中的任何一个都为零，但不是两者都为零，则这些是边缘情况。如果两者都不为零，则这是一个常规的内部点。
 
-A minimal test suite for this function would include a separate test for the
-each of the edge cases, and an internal point. For example:
+此功能的最小测试套件将包括针对每个边缘情况的单独测试和内部点。例如：
 
 ~~~
 import numpy as np
@@ -160,22 +125,16 @@ def test_edge_y():
 ~~~
 {: .python}
 
-> ## Write a Corner Case
+> ## 写一个Corner Case
 >
-> The sinc2d example will also need a test for the corner case, where both x
-> and y are 0.0.
+> sinc2d示例还需要对极端情况进行测试，其中 x 和 y 均为 0.0。
 >
-> 1. Insert the sinc2d function code (above) into a file called mod.py.
-> 2. Add the edge and internal case tests (above) to a test_sinc2d.py file.
-> 3. Invent and implement a corner case test in that file.
-> 4. Run all of the tests using `pytest` on the command line.
+> 1. 将 sinc2d 函数代码（上图）插入到名为 mod.py 的文件中。
+> 2. 将边缘和内部测试用例测试（上图）添加到 test_sinc2d.py 文件中。
+> 3. 在该文件中发明并实施极端测试用例测试。
+> 4. 在命令行上使用 `pytest` 运行所有测试。
 {: .checklist}
 
-Corner cases can be even trickier to find and debug than edge cases because of their
-increased complexity.  This complexity, however, makes them even more important to
-explicitly test.
+corner测试用例比边缘测试用例更难找到和调试，因为它们增加了复杂性。然而，这种复杂性使得它们对于显式测试更加重要。
 
-Whether internal, edge, or corner cases, we have started to build
-up a classification system for the tests themselves. In the following sections,
-we will build this system up even more based on the role that the tests have
-in the software architecture.
+无论是内部测试用例、边缘测试用例还是corner测试用例，我们都已开始为测试本身建立分类系统。在接下来的部分中，我们将更加基于测试在软件架构中的作用来构建这个系统。

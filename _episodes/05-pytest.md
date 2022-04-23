@@ -1,25 +1,23 @@
 ---
-title: Running Tests with pytest
+title: 使用pytest运行测试
 teaching: 10
 exercises: 0
 questions:
-- "How do I automate my tests?"
+- "如何自动化我的测试？"
 objectives:
-- "Understand how to run a test suite using the pytest framework"
-- "Understand how to read the output of a pytest test suite"
+- "了解如何使用pytest框架运行测试套件"
+- "了解如何读取pytest测试套件的输出"
 keypoints:
-- "The `pytest` command collects and runs tests starting with `Test` or `test_`."
-- "`.` means the test passed"
-- "`F` means the test failed or erred"
-- "`x` is a known failure"
-- "`s` is a purposefully skipped test"
+- "`pytest`命令收集并运行以`Test`或`test_`开头的测试。"
+- "`.` 表示测试通过"
+- "`F` 表示测试失败或错误"
+- "`x` 是一个已知的失败"
+- "`s` 是故意跳过的测试"
 ---
 
-We created a suite of tests for our mean function, but it was annoying to run
-them one at a time. It would be a lot better if there were some way to run them
-all at once, just reporting which tests fail and which succeed.
+我们为平均函数创建了一套测试，但一次运行一个测试很烦人。如果有某种方法可以一次运行它们会好很多，只需报告哪些测试失败和哪些成功。
 
-Thankfully, that exists. Recall our tests:
+值得庆幸的是，这是存在的。回想一下我们的测试：
 
 ~~~
 from mean import *
@@ -59,8 +57,7 @@ def test_complex():
 ~~~
 {: .python}
 
-Once these tests are written in a file called `test_mean.py`, the command
-`pytest` can be run on the terminal or command line from the directory containing the tests (note that you'll have to use `py.test` for older versions of the `pytest` package):
+一旦将这些测试写入名为`test_mean.py`的文件中，就可以在终端或命令行上从包含测试的目录运行命令`pytest`（请注意，对于旧版本的`pytest`包，您必须使用`py.test`）：
 
 ~~~
 $ pytest
@@ -88,29 +85,13 @@ test_mean.py:34: AssertionError
 ~~~
 {: .output}
 
-In the above case, the pytest package 'sniffed-out' the tests in the
-directory and ran them together to produce a report of the sum of the files and
-functions matching the regular expression `[Tt]est[-_]*`.
+在上述情况下，pytest包“嗅出”目录中的测试并将它们一起运行以生成与正则表达式“[Tt]est[-_]*”匹配的文件和函数总和的报告。
 
-The major benefit a testing framework provides is exactly that, a utility to find and run the
-tests automatically. With pytest, this is the command-line tool called
-`pytest`.  When `pytest` is run, it will search all directories below where it was called,
-find all of the Python files in these directories whose names
-start or end with `test`, import them, and run all of the functions and classes
-whose names start with `test` or `Test`.
-This automatic registration of test code saves tons of human time and allows us to
-focus on what is important: writing more tests.
+测试框架提供的主要好处正是，它是一个自动查找和运行测试的实用程序。对于pytest，这是一个名为`pytest`的命令行工具。当`pytest`运行时，它将搜索调用它的下面的所有目录，在这些目录中查找名称以`test`开头或结尾的所有Python文件，导入它们，并运行以“test”或“Test”开头的函数和类。这种测试代码的自动注册节省了大量的人力时间，并使我们能够专注于重要的事情：编写更多的测试。
 
-When you run `pytest`, it will print a dot (`.`) on the screen for every test
-that passes,
-an `F` for every test that fails or where there was an unexpected error.
-In rarer situations you may also see an `s` indicating a
-skipped tests (because the test is not applicable on your system) or a `x` for a known
-failure (because the developers could not fix it promptly). After the dots, pytest
-will print summary information.
+当您运行`pytest`时，它会在屏幕上为每个通过的测试打印一个点 (`.`)，为每个失败的测试或出现意外错误的地方打印一个`F`。在极少数情况下，您可能还会看到一个`s`表示跳过的测试（因为该测试不适用于您的系统）或一个`x`表示已知故障（因为开发人员无法及时修复它）。在点之后，pytest将打印摘要信息。
 
-Without changing the tests, alter the mean.py file from the previous section until it passes.
-When it passes, `pytest` will produce results like the following:
+在不更改测试的情况下，更改上一节中的mean.py文件，直到它通过。当它通过时，`pytest`将产生如下结果：
 
 ~~~
 $ pytest
@@ -126,12 +107,11 @@ test_mean.py .....
 ~~~
 {: .output}
 
-> ## Show what tests are executed
+> ## 显示执行了哪些测试
 >
-> Using `pytest -v` will result in `pytest` listing which tests are executed
-> and whether they pass or not:
+> 使用`pytest -v`将导致`pytest`列出执行了哪些测试以及它们是否通过：
 > ~~~
-> $ py.test
+> $ pytest -v
 > ~~~
 > {: .bash}
 >
@@ -152,7 +132,4 @@ test_mean.py .....
 >
 {: .callout}
 
-As we write more code, we would write more tests, and pytest would produce
-more dots.  Each passing test is a small, satisfying reward for having written
-quality scientific software. Now that you know how to write tests, let's go
-into what can go wrong.
+随着我们编写更多代码，我们会编写更多测试，而pytest会产生更多点。每次通过测试都是对编写高质量科学软件的小而令人满意的奖励。现在您知道如何编写测试，让我们来看看可能出错的地方。
