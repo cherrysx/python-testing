@@ -1,6 +1,6 @@
 ---
 layout: reference
-title: Key Points and Glossary
+title: 关键点和术语
 subtitle: Reference
 ---
 ## Glossary
